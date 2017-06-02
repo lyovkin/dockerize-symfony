@@ -1,0 +1,30 @@
+version: '3'
+services:
+    php:
+        container_name: ${PROJECT_NAME}-php
+        build: php
+        restart: always
+        volumes:
+            - ${SYMFONY_APP_PATH}:/var/www/symfony
+            - ./logs/project:/var/www/symfony/app/logs
+    nginx:
+        container_name: ${PROJECT_NAME}-nginx
+        build: nginx
+        restart: always
+        ports:
+            - 8080:80
+        links:
+            - php
+        volumes:
+            - ./logs/nginx/:/var/log/nginx
+    db:
+        container_name: ${PROJECT_NAME}-db
+        image: umputun/mongo-auth
+        restart: always
+        ports:
+            - 27017:27017
+        environment:
+            MONGO_PASSWD: ${MONGO_PASSWD}
+        volumes:
+            - ./volumes/mongodb:/data/db
+
