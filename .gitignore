@@ -2,4 +2,4 @@
 docker-compose.override.yml
 logs/project
 logs/nginx
-volumes/mongodb
+volumes/mongodb/
